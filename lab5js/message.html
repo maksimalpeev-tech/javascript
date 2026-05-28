@@ -10,7 +10,13 @@
             margin-bottom: 10px;
             position: relative;
             background: #f9f9f9;
+            transition: opacity 0.3s ease; 
         }
+        
+        .hidden {
+            display: none;
+        }
+
         .close-btn {
             position: absolute;
             top: 5px;
@@ -18,22 +24,29 @@
             cursor: pointer;
             color: red;
             font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .close-btn:hover {
+            color: darkred;
         }
     </style>
 </head>
 <body>
+    <h3>Список сообщений</h3>
+    
     <div class="message">
-        <span class="close-btn">[X]</span>
+        <span class="close-btn" title="Скрыть">&times;</span> 
         <strong>Лошадь</strong><br>
         Домашняя лошадь – животное семейства непарнокопытных...
     </div>
     <div class="message">
-        <span class="close-btn">[X]</span>
+        <span class="close-btn" title="Скрыть">&times;</span>
         <strong>Осёл</strong><br>
         Домашний осёл или ишак – одомашненный подвид дикого осла...
     </div>
     <div class="message">
-        <span class="close-btn">[X]</span>
+        <span class="close-btn" title="Скрыть">&times;</span>
         <strong>Корова</strong><br>
         Корова – самка домашнего быка...
     </div>
@@ -41,12 +54,15 @@
     <script>
         'use strict';
 
-        const messages = document.querySelectorAll('.message');
+        const closeButtons = document.querySelectorAll('.close-btn');
 
-        messages.forEach(msg => {
-            const closeBtn = msg.querySelector('.close-btn');
-            closeBtn.addEventListener('click', () => {
-                msg.remove();
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const messageBox = this.closest('.message');
+                
+                if (messageBox) {
+                    messageBox.classList.add('hidden');
+                }
             });
         });
     </script>
