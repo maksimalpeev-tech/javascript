@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сообщения</title>
+    <style>
+        .message {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            background: #f9f9f9;
+        }
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <span class="close-btn">[X]</span>
+        <strong>Лошадь</strong><br>
+        Домашняя лошадь – животное семейства непарнокопытных...
+    </div>
+    <div class="message">
+        <span class="close-btn">[X]</span>
+        <strong>Осёл</strong><br>
+        Домашний осёл или ишак – одомашненный подвид дикого осла...
+    </div>
+    <div class="message">
+        <span class="close-btn">[X]</span>
+        <strong>Корова</strong><br>
+        Корова – самка домашнего быка...
+    </div>
+
+    <script>
+        'use strict';
+
+        const messages = document.querySelectorAll('.message');
+
+        messages.forEach(msg => {
+            const closeBtn = msg.querySelector('.close-btn');
+            closeBtn.addEventListener('click', () => {
+                msg.remove();
+            });
+        });
+    </script>
+</body>
+</html>

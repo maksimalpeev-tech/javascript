@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Дерево с точками</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        
+        ul { 
+            list-style-type: disc; /* Точки */
+            padding-left: 20px; 
+        }
+        
+        li { 
+            margin: 5px 0; 
+        }
+
+        .node-text {
+            cursor: pointer;
+            color: #333;
+        }
+        .node-text:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        li.closed > ul {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Дерево</h1>
+    <div id="container"></div>
+
+    <script>
+        'use strict';
+
+        let data = {
+            "Рыбы": {
+                "форель": {},
+                "лосось": {}
+            },
+            "Деревья": {
+                "Огромные": {
+                    "секвойя": {},
+                    "дуб": {}
+                },
+                "Цветковые": {
+                    "яблоня": {},
+                    "магнолия": {}
+                }
+            }
+        };
+
+        function createTree(container, data) {
+            const ul = document.createElement('ul');
+            
+            for (let key in data) {
+                const li = document.createElement('li');
+                
+                const span = document.createElement('span');
+                span.textContent = key;
+                span.classList.add('node-text');
+                li.appendChild(span);
+
+                const children = data[key];
+                const hasChildren = Object.keys(children).length > 0;
+
+                if (hasChildren) {
+                    createTree(li, children);
+
+                    span.addEventListener('click', function(e) {
+                        e.preventDefault(); 
+                        li.classList.toggle('closed');
+                    });
+                } else {
+
+                    span.style.cursor = 'default';
+                    span.onclick = null;
+                }
+                
+                ul.appendChild(li);
+            }
+            
+            container.appendChild(ul);
+        }
+
+        const container = document.getElementById('container');
+        createTree(container, data);
+    </script>
+</body>
+</html>

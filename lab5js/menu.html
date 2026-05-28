@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню</title>
+    <style>
+        .menu-item { cursor: pointer; font-weight: bold; }
+        .submenu { display: none; margin-left: 20px; list-style-type: none; }
+        .open .submenu { display: block; }
+    </style>
+</head>
+<body>
+    <ul>
+        <li class="menu-container">
+            <span class="menu-item">Сладости (нажми меня)!</span>
+            <ul class="submenu">
+                <li>Торт</li>
+                <li>Пончик</li>
+                <li>Пирожное</li>
+            </ul>
+        </li>
+    </ul>
+
+    <script>
+        'use strict';
+
+        const menuItem = document.querySelector('.menu-item');
+        const container = document.querySelector('.menu-container');
+
+        menuItem.addEventListener('click', () => {
+            container.classList.toggle('open');
+        });
+    </script>
+</body>
+</html>
