@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактируемая таблица</title>
+    <style>
+        table { border-collapse: collapse; width: 400px; }
+        td { border: 1px solid black; padding: 5px; height: 40px; cursor: pointer; }
+        .editing textarea { width: 95%; height: 90%; resize: none; }
+        .controls { display: flex; gap: 5px; margin-top: 5px; }
+        .controls button { font-size: 12px; }
+    </style>
+</head>
+<body>
+    <h1>Редактируемая таблица</h1>
+    <table id="editTable">
+        <tr><td>Ячейка 1</td><td>Ячейка 2</td></tr>
+        <tr><td>Ячейка 3</td><td>Ячейка 4</td></tr>
+    </table>
+
+    <script>
+        'use strict';
+
+        const table = document.getElementById('editTable');
+        let currentCell = null;
+
+        table.addEventListener('click', (e) => {
+            const td = e.target.closest('td');
+            if (!td) return;
+            
+            if (currentCell && currentCell !== td) return;
+            
+            if (e.target.tagName === 'BUTTON') return;
+
+            if (!currentCell) {
+                makeEditable(td);
+            }
+        });
+
+        function makeEditable(td) {
+            currentCell = td;
+            td.classList.add('editing');
+            
+            const originalContent = td.innerHTML;
+            
+            
+            const textarea = document.createElement('textarea');
+            textarea.value = td.innerText;
+            
+            
+            const divControls = document.createElement('div');
+            divControls.className = 'controls';
+            
+            const btnOk = document.createElement('button');
+            btnOk.textContent = 'OK';
+            btnOk.onclick = () => {
+                td.innerHTML = textarea.value; 
+                finishEditing(td);
+            };
+            
+            const btnCancel = document.createElement('button');
+            btnCancel.textContent = 'ОТМЕНА';
+            btnCancel.onclick = () => {
+                td.innerHTML = originalContent; 
+                finishEditing(td);
+            };
+            
+            divControls.append(btnOk, btnCancel);
+            
+            td.innerHTML = '';
+            td.append(textarea, divControls);
+            textarea.focus();
+        }
+
+        function finishEditing(td) {
+            td.classList.remove('editing');
+            currentCell = null;
+        }
+    </script>
+</body>
+</html>

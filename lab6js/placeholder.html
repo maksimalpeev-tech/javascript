@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Placeholder Подсказка</title>
+    <style>
+        .form-group {
+            position: relative;
+            margin: 20px;
+            font-family: sans-serif;
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+        /* Стиль для плейсхолдера внутри поля */
+        .placeholder-text {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            color: blue; /* Синий цвет по заданию */
+            pointer-events: none;
+            transition: 0.2s ease all;
+        }
+        /* Когда поле в фокусе или не пустое, подсказка улетает вверх */
+        .form-group.focused .placeholder-text,
+        .form-group.not-empty .placeholder-text {
+            top: -20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Placeholder Подсказка</h1>
+    
+    <div class="form-group" id="nameGroup">
+        <input type="text" id="nameInput" data-placeholder="Введите ваше имя">
+        <span class="placeholder-text">Введите ваше имя</span>
+    </div>
+
+    <script>
+        'use strict';
+
+        const group = document.getElementById('nameGroup');
+        const input = document.getElementById('nameInput');
+        const placeholder = group.querySelector('.placeholder-text');
+
+        // Инициализация: берем текст из data-placeholder
+        const initialText = input.dataset.placeholder;
+        placeholder.textContent = initialText;
+
+        input.addEventListener('focus', () => {
+            group.classList.add('focused');
+        });
+
+        input.addEventListener('blur', () => {
+            group.classList.remove('focused');
+            if (input.value === '') {
+                group.classList.remove('not-empty');
+            } else {
+                group.classList.add('not-empty');
+            }
+        });
+
+        // Проверка при вводе, чтобы подсказка не возвращалась, если есть текст
+        input.addEventListener('input', () => {
+            if (input.value !== '') {
+                group.classList.add('not-empty');
+            } else {
+                group.classList.remove('not-empty');
+            }
+        });
+    </script>
+</body>
+</html>
